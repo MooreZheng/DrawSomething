@@ -8,7 +8,66 @@ import scipy.stats
 import numpy as np  
 import matplotlib.pyplot as plt  
  
-graph = 6
+graph = 15
+xfontsize = 60
+yfontsize = 60
+xlabelsize = 70
+ylabelsize = 70
+legendsize = 60
+if graph == 14:#Fine-grained on floors without RFE, RFE 25% - 
+#MSE of TPO-P without and with RFE.
+    n_groups = 2
+    mse = (2.85442982136, 2.67743721074)
+    #mse = (9.22276195083, 2.67743721074)
+    #Total, random 10, random 30, RFE 25%
+#    n_groups = 4
+#    mse = (2.85442982136, 2.91546933629, 2.82799128194, 2.67743721074)
+    fig, ax = plt.subplots()  
+    index = np.arange(n_groups)  
+    bar_width = 0.3  
+    opacity = 0.7 
+    rects1 = plt.bar(0.7+index, mse, bar_width,alpha=opacity, color='#87CEFA')  
+    ax=plt.gca()
+    for tick in ax.xaxis.get_major_ticks():
+        tick.label1.set_fontsize(xfontsize)
+    for tick in ax.yaxis.get_major_ticks():
+        tick.label1.set_fontsize(yfontsize)    
+    plt.xlabel('Algorithms',size=xlabelsize)  
+    plt.ylabel('Mean MSE', size=ylabelsize)  
+    plt.xticks(0.55+ index + bar_width, ('TPO-P \n(without RFE)','TPO-P'))  
+    plt.xlim(0,3)
+    plt.ylim(2.5,3)
+    plt.legend(bbox_to_anchor=(1, 1), prop={'size':legendsize})   
+    #plt.tight_layout()  
+    plt.show()
+elif graph == 15:#overview 2a - different training time
+    #TFO-P: Mean MSE as a function of training length
+    n_groups = 6 
+     
+    mse = (10.8529139633, 4.07865387387, 3.38408769104, 3.06303387774,3.04027656595,2.74723547149)
+    fig, ax = plt.subplots()  
+    index = np.arange(n_groups)  
+    bar_width = 0.4  
+      
+    opacity = 0.7 
+    rects1 = plt.bar(0.7+index, mse, bar_width,alpha=opacity, color='#87CEFA')  
+    #rects2 = plt.bar(index + 2*bar_width, corrWk, bar_width,alpha=opacity,color='w') 
+    #rects2 = plt.bar(index + 2*bar_width, corrWk, bar_width,alpha=opacity,color='g',label='Weekends') 
+    ax=plt.gca()
+    for tick in ax.xaxis.get_major_ticks():
+        tick.label1.set_fontsize(xfontsize)
+    for tick in ax.yaxis.get_major_ticks():
+        tick.label1.set_fontsize(yfontsize)    
+    plt.xlabel('Training Length (month)',size=xlabelsize)  
+    plt.ylabel('Mean MSE', size=ylabelsize)  
+    plt.xticks(0.5+ index + bar_width, ('0.5','1','1.5','2','2.5','3'))  
+    plt.xlim(0,7)
+    plt.ylim(0,12)
+    plt.legend(bbox_to_anchor=(1, 1), prop={'size':legendsize})   
+    #plt.tight_layout()  
+    plt.show() 
+    
+    
 if graph == 1:
     n_groups = 4  
      
@@ -26,13 +85,14 @@ if graph == 1:
         s.append(t)
     print 'mean t', np.mean(s)
     
-    fig, ax = plt.subplots()  
+    fig = plt.figure(figsize=(8,6),dpi=80)
+    errorDis1 = plt.subplot(1,1,1)  
     index = np.arange(n_groups)  
     bar_width = 0.35  
       
     opacity = 0.4  
-    rects1 = plt.bar(index, means_occ, bar_width,alpha=opacity, color='g',label= 'LWR-OT MSE')  
-    rects2 = plt.bar(index + bar_width, means_traf, bar_width,alpha=opacity,color='r',label='LWR-T MSE') 
+    rects1 = plt.bar(index, means_occ, bar_width,alpha=opacity, color='b',label= 'LWR-OT MSE')  
+    rects2 = plt.bar(index + bar_width, means_traf, bar_width,alpha=opacity,color='g',label='LWR-T MSE') 
     ax=plt.gca()
     for tick in ax.xaxis.get_major_ticks():
         tick.label1.set_fontsize(45)
@@ -41,10 +101,11 @@ if graph == 1:
     plt.xlabel('Dates',size=45)  
     plt.ylabel('MSE', size=45)  
     plt.xticks(index + bar_width, ('8.1', '8.7', '8.18', '8.20'))  
-    plt.ylim(0,13)  
+    #xlim(16,24)
+    ylim(0,13)  
     plt.legend(prop={'size':45})  
       
-    plt.tight_layout()  
+    #plt.tight_layout()  
     plt.show()  
 
 elif graph == 2:#'6.5','6.6','6.9','6.10'
@@ -93,7 +154,7 @@ elif graph == 2:#'6.5','6.6','6.9','6.10'
     plt.ylim(0,14)  
     plt.legend(bbox_to_anchor=(0.47, 1), prop={'size':40})  
       
-    plt.tight_layout()  
+    #plt.tight_layout()  
     plt.show() 
 elif graph == 2.1:#'6.5',  '6.25',  '7.21',  '8.1'
     n_groups = 4  
@@ -138,7 +199,7 @@ elif graph == 2.1:#'6.5',  '6.25',  '7.21',  '8.1'
     #plt.ylim(0,14)  
     plt.legend(bbox_to_anchor=(0.5, 1), prop={'size':40})  
       
-    plt.tight_layout()  
+    #plt.tight_layout()  
     plt.show()  
 elif graph == 3:
     n_groups = 4  
@@ -168,7 +229,7 @@ elif graph == 3:
     plt.ylim(-0,0.7)  
     plt.legend(bbox_to_anchor=(1, 1), prop={'size':40})  
       
-    plt.tight_layout()  
+    #plt.tight_layout()  
     plt.show()  
 
 elif graph == 4:#Monday ~ Sunday and all
@@ -194,58 +255,35 @@ elif graph == 4:#Monday ~ Sunday and all
     #plt.ylim(-0,0.7)  
     plt.legend(bbox_to_anchor=(1, 1), prop={'size':40})  
       
-    plt.tight_layout()  
+    #plt.tight_layout()  
     plt.show() 
 
-elif graph == 5:#overview 2a - different training time
-    n_groups = 6 
-     
-    mse = (10.8529139633, 4.07865387387, 3.38408769104, 3.06303387774,3.04027656595,2.74723547149)
-    fig, ax = plt.subplots()  
-    index = np.arange(n_groups)  
-    bar_width = 0.4  
-      
-    opacity = 0.7 
-    rects1 = plt.bar(0.7+index, mse, bar_width,alpha=opacity, color='#87CEFA')  
-    #rects2 = plt.bar(index + 2*bar_width, corrWk, bar_width,alpha=opacity,color='w') 
-    #rects2 = plt.bar(index + 2*bar_width, corrWk, bar_width,alpha=opacity,color='g',label='Weekends') 
-    ax=plt.gca()
-    for tick in ax.xaxis.get_major_ticks():
-        tick.label1.set_fontsize(40)
-    for tick in ax.yaxis.get_major_ticks():
-        tick.label1.set_fontsize(40)    
-    plt.xlabel('Training Length (month)',size=50)  
-    plt.ylabel('Mean MSE', size=50)  
-    plt.xticks(0.5+ index + bar_width, ('0.5','1','1.5','2','2.5','3'))  
-    plt.xlim(0,7)
-    plt.ylim(0,12)
-    plt.legend(bbox_to_anchor=(1, 1), prop={'size':50})   
-    plt.tight_layout()  
-    plt.show() 
-elif graph == 6:#Temporary vs Permanent - 2a - different training time
-    n_groups = 5
-    mse = (14.2177786334, 4.42757176108, 3.96293832033, 3.00336627551, 2.99212143795)
-    fig, ax = plt.subplots()  
-    index = np.arange(n_groups)  
-    bar_width = 0.4  
-      
-    opacity = 0.7 
-    rects1 = plt.bar(0.7+index, mse, bar_width,alpha=opacity, color='#87CEFA')  
-    #rects2 = plt.bar(index + 2*bar_width, corrWk, bar_width,alpha=opacity,color='w') 
-    #rects2 = plt.bar(index + 2*bar_width, corrWk, bar_width,alpha=opacity,color='g',label='Weekends') 
-    ax=plt.gca()
-    for tick in ax.xaxis.get_major_ticks():
-        tick.label1.set_fontsize(40)
-    for tick in ax.yaxis.get_major_ticks():
-        tick.label1.set_fontsize(40)    
-    plt.xlabel('Training Time (week)',size=50)  
-    plt.ylabel('Mean MSE', size=50)  
-    plt.xticks(0.5+ index + bar_width, ('1','2','4','6','8'))  
-    plt.xlim(0,6)
-    plt.ylim(0,15.5)
-    plt.legend(bbox_to_anchor=(1, 1), prop={'size':50})   
-    plt.tight_layout()  
-    plt.show()
+
+#elif graph == 6:#Temporary vs Permanent - 2a - different training time
+#    n_groups = 5
+#    #mse = (14.2177786334, 4.42757176108, 3.96293832033, 3.00336627551, 2.99212143795)
+#    #mse = (11.3630137637, 8.30783926981, 7.40331461664, 6.7372113718, 4.53503860232, 4.53503860232, 4.53503860232, 4.53503860232)
+#    fig, ax = plt.subplots()  
+#    index = np.arange(n_groups)  
+#    bar_width = 0.4  
+#      
+#    opacity = 0.7 
+#    rects1 = plt.bar(0.7+index, mse, bar_width,alpha=opacity, color='#87CEFA')  
+#    #rects2 = plt.bar(index + 2*bar_width, corrWk, bar_width,alpha=opacity,color='w') 
+#    #rects2 = plt.bar(index + 2*bar_width, corrWk, bar_width,alpha=opacity,color='g',label='Weekends') 
+#    ax=plt.gca()
+#    for tick in ax.xaxis.get_major_ticks():
+#        tick.label1.set_fontsize(40)
+#    for tick in ax.yaxis.get_major_ticks():
+#        tick.label1.set_fontsize(40)    
+#    plt.xlabel('Training Length (week)',size=50)  
+#    plt.ylabel('Mean MSE', size=50)  
+#    plt.xticks(0.5+ index + bar_width, ('1','2','3','4','6','8','10','12'))  
+#    plt.xlim(0,6)
+#    #plt.ylim(0,15.5)
+#    plt.legend(bbox_to_anchor=(1, 1), prop={'size':50})   
+#    #plt.tight_layout()  
+#    plt.show()
 elif graph == 7:#Temporary vs Permanent - 3a - May vs June for July
     n_groups = 2
     mse = (4.42760649074, 2.89195517687)
@@ -268,7 +306,7 @@ elif graph == 7:#Temporary vs Permanent - 3a - May vs June for July
     plt.xlim(0,3)
     plt.ylim(0,5)
     plt.legend(bbox_to_anchor=(1, 1), prop={'size':50})   
-    plt.tight_layout()  
+    #plt.tight_layout()  
     plt.show()
 elif graph == 8:#Temporary vs Permanent - 3a - May vs June vs July for August
     n_groups = 3
@@ -292,7 +330,7 @@ elif graph == 8:#Temporary vs Permanent - 3a - May vs June vs July for August
     plt.xlim(0,4)
     plt.ylim(0,7)
     plt.legend(bbox_to_anchor=(1, 1), prop={'size':50})   
-    plt.tight_layout()  
+    #plt.tight_layout()  
     plt.show()
 elif graph == 9:#TFO-TT / TF-T
     n_groups = 9 
@@ -317,9 +355,10 @@ elif graph == 9:#TFO-TT / TF-T
     #plt.ylim(-0,0.7)  
     plt.legend(bbox_to_anchor=(1, 1), prop={'size':40})  
       
-    plt.tight_layout()  
+    #plt.tight_layout()  
     plt.show() 
 elif graph == 10:#Fine-grained on floors Total, RFE 25% - 
+#MSE of TPO-P without and with RFE.
     n_groups = 2
     mse = (2.85442982136, 2.67743721074)
     
@@ -346,8 +385,148 @@ elif graph == 10:#Fine-grained on floors Total, RFE 25% -
     plt.xlim(0,3)
     plt.ylim(2.5,3)
     plt.legend(bbox_to_anchor=(1, 1), prop={'size':50})   
-    plt.tight_layout()  
+    #plt.tight_layout()  
     plt.show()
+
+elif graph == 10.2:#Fine-grained on floors Total, RFE 25% - 
+#MSE of TPO-T without and with RFE.
+
+    n_groups = 2
+    mse = (3.03595447335, 2.81896390127)
+    
+    #Total, random 10, random 30, RFE 25%
+#    n_groups = 4
+#    mse = (2.85442982136, 2.91546933629, 2.82799128194, 2.67743721074)
+    
+    fig, ax = plt.subplots()  
+    index = np.arange(n_groups)  
+    bar_width = 0.3  
+      
+    opacity = 0.7 
+    rects1 = plt.bar(0.7+index, mse, bar_width,alpha=opacity, color='#87CEFA')  
+    #rects2 = plt.bar(index + 2*bar_width, corrWk, bar_width,alpha=opacity,color='w') 
+    #rects2 = plt.bar(index + 2*bar_width, corrWk, bar_width,alpha=opacity,color='g',label='Weekends') 
+    ax=plt.gca()
+    for tick in ax.xaxis.get_major_ticks():
+        tick.label1.set_fontsize(40)
+    for tick in ax.yaxis.get_major_ticks():
+        tick.label1.set_fontsize(40)    
+    plt.xlabel('Algorithms',size=50)  
+    plt.ylabel('Mean MSE', size=50)  
+    plt.xticks(0.5+ index + bar_width, ('TFO-T','TFO-T (RFE)'))  
+    plt.xlim(0,3)
+    plt.ylim(2.5,3.1)
+    plt.legend(bbox_to_anchor=(1, 1), prop={'size':50})   
+    #plt.tight_layout()  
+    plt.show()
+elif graph == 10.3:#Fine-grained on time slot, lasso 
+#MSE of TPO-P without and with lasso.
+    n_groups = 2
+    mse = (127.880889311, 2.81896390127)
+#    n_groups = 4
+#    mse = (2.85442982136, 2.91546933629, 2.82799128194, 2.67743721074)
+    
+    fig, ax = plt.subplots()  
+    index = np.arange(n_groups)  
+    bar_width = 0.3  
+      
+    opacity = 0.7 
+    rects1 = plt.bar(0.7+index, mse, bar_width,alpha=opacity, color='#87CEFA')  
+    #rects2 = plt.bar(index + 2*bar_width, corrWk, bar_width,alpha=opacity,color='w') 
+    #rects2 = plt.bar(index + 2*bar_width, corrWk, bar_width,alpha=opacity,color='g',label='Weekends') 
+    ax=plt.gca()
+    for tick in ax.xaxis.get_major_ticks():
+        tick.label1.set_fontsize(40)
+    for tick in ax.yaxis.get_major_ticks():
+        tick.label1.set_fontsize(40)    
+    plt.xlabel('Algorithms',size=50)  
+    plt.ylabel('Mean MSE', size=50)  
+    plt.xticks(0.5+ index + bar_width, ('TFO-P \n(without Lasso)','TFO-P'))  
+    plt.xlim(0,3)
+    plt.ylim(0,130)
+    plt.legend(bbox_to_anchor=(1, 1), prop={'size':50})   
+    #plt.tight_layout()  
+    plt.show()
+elif graph == 11:#overall - running time  #Running Time of different scheme components.
+    n_groups = 3
+    mse = (24, 432, 1)
+    
+    fig, ax = plt.subplots()  
+    index = np.arange(n_groups)  
+    bar_width = 0.3  
+      
+    opacity = 0.7 
+    rects1 = plt.bar(0.7+index, mse, bar_width,alpha=opacity, color='#87CEFA')  
+    #rects2 = plt.bar(index + 2*bar_width, corrWk, bar_width,alpha=opacity,color='w') 
+    #rects2 = plt.bar(index + 2*bar_width, corrWk, bar_width,alpha=opacity,color='g',label='Weekends') 
+    ax=plt.gca()
+    for tick in ax.xaxis.get_major_ticks():
+        tick.label1.set_fontsize(40)
+    for tick in ax.yaxis.get_major_ticks():
+        tick.label1.set_fontsize(40)    
+    plt.xlabel('Scheme Components',size=50)  
+    plt.ylabel('Running Time (Minutes)', size=50)  
+    plt.xticks(0.55+ index + bar_width, ('Feature \nSelection','Feature \nExtraction','Learning and \nForecasting'))  
+    plt.xlim(0,3.5)
+    #plt.ylim(2.5,3)
+    plt.legend(bbox_to_anchor=(1, 1), prop={'size':50})   
+    #plt.tight_layout()  
+    #plt.grid(True, which = 'major', axis = 'y', linewidth=2.5, solid_joinstyle='bevel')
+    plt.show()
+elif graph == 12:#cut loading apart - running time  #Running Time of different scheme components, a more detailed view.
+    n_groups = 5
+    mse = (80, 1, 8, 280, 1)
+    
+    
+    fig, ax = plt.subplots()  
+    index = np.arange(n_groups)  
+    bar_width = 0.3  
+      
+    opacity = 0.7 
+    rects1 = plt.bar(0.7+index, mse, bar_width,alpha=opacity, color='#87CEFA')  
+    #rects2 = plt.bar(index + 2*bar_width, corrWk, bar_width,alpha=opacity,color='w') 
+    #rects2 = plt.bar(index + 2*bar_width, corrWk, bar_width,alpha=opacity,color='g',label='Weekends') 
+    ax=plt.gca()
+    for tick in ax.xaxis.get_major_ticks():
+        tick.label1.set_fontsize(40)
+    for tick in ax.yaxis.get_major_ticks():
+        tick.label1.set_fontsize(40)    
+    plt.xlabel('Scheme Components',size=50)  
+    plt.ylabel('Running Time (Minutes)', size=50)  
+    plt.xticks(0.55+ index + bar_width, ('Data \nLoading','LASSO','RFE','DTW-OT','LWR'))  
+    #plt.xlim(0,3.5)
+    #plt.ylim(2.5,3)
+    plt.legend(bbox_to_anchor=(1, 1), prop={'size':50})   
+    #plt.tight_layout()  
+    #plt.grid(True, which = 'major', axis = 'y', linewidth=2.5, solid_joinstyle='bevel')
+    plt.show()
+elif graph == 13:#|S - \tilde(S)| |S - \bar(S)| |S - S_K| 
+    n_groups = 3
+    mse = (0, 8.77439156301, 40.1666666667)
+    
+    fig, ax = plt.subplots()  
+    index = np.arange(n_groups)  
+    bar_width = 0.3  
+      
+    opacity = 0.7 
+    rects1 = plt.bar(0.7+index, mse, bar_width,alpha=opacity, color='#87CEFA')  
+    #rects2 = plt.bar(index + 2*bar_width, corrWk, bar_width,alpha=opacity,color='w') 
+    #rects2 = plt.bar(index + 2*bar_width, corrWk, bar_width,alpha=opacity,color='g',label='Weekends') 
+    ax=plt.gca()
+    for tick in ax.xaxis.get_major_ticks():
+        tick.label1.set_fontweight('bold')
+        tick.label1.set_fontsize(45)
+    for tick in ax.yaxis.get_major_ticks():
+        tick.label1.set_fontsize(45)
+    ax.tick_params(direction='out', pad=15)
+    plt.xlabel('Different Measurements of $S$',size=50)  
+    plt.ylabel('Mean Square Error', size=50)  
+    plt.xticks(0.55+ index + bar_width, (r'$S = \widetilde{S}$',r'$S = \overline{S}$','$S = S_c$'), fontsize = 50)  
+    plt.xlim(0,3.5)
+    #plt.ylim(2.5,3)
+    plt.legend(bbox_to_anchor=(1, 1), prop={'size':50})   
+    #plt.tight_layout()  
+    #plt.grid(True, which = 'major', axis = 'y', linewidth=2.5, solid_joinstyle='bevel')
 #time = [1,2,3]
 #occ = [8.60084219559 ,  0.000385731267841 ,  0.648762484776]
 #ha = [12.6118711793, 0.0929882253731, 1.18880715534]
