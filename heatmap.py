@@ -19,35 +19,6 @@ xlabelsize = 70
 ylabelsize = 70
 
 if graph == 2: 
-#    A = [] 
-#    for i in range(0,120,10):
-#        B = []
-#        for j in range(0,120,10):
-#            if i >= 55 and i <= 65 and j >= 55 and j <= 65:
-#                B.append(random.uniform(50,100))
-#            elif i >= 50 and i <= 70 and j>= 50 and j<= 70:
-#                B.append(random.uniform(40,90))
-#            elif i >= 30 and i <= 90 and j>= 30 and j<= 90:
-#                B.append(random.uniform(30,70))
-#            elif i >=35 and i <= 120 and j >= 0 and j <= 35:
-#                B.append(random.uniform(0,1))
-#            elif i >=35 and i <= 80 and j >= 100 and j <= 120:
-#                B.append(random.uniform(0,1))
-#            elif i >=40 and i <= 55 and j >= 20 and j <= 35:
-#                B.append(random.uniform(0,1))
-#            else:
-#                B.append(random.uniform(0,50))
-#        A.append(B)
-#    A = NP.array(A)
-#    
-#    print '['
-#    for i in range(len(A)):
-#        print '[',
-#        for j in range(len(A[i])-1):
-#            print A[i][j], ',',
-#        print A[i][-1], '],'
-#    print ']'
-    
     A = [
         [ 4.886152207 , 0.09112904 , 34.13062004294 , 0.73508677628 , 33.9041139311 , 0.6739927033 , 10.1955819828 , 12.4610596581 , 2.48998745035 , 6.11990123017 , 4.11601138559 , 10.85974908 ],
         [ 30.0303910216 , 43.9760615589 , 20.9160197496 , 33.0402240188 , 18.6481122604 , 4.54066925472 , 32.2753393539 , 41.1437109732 , 28.0045905186 , 3.01728566776 , 16.8043971567 , 2.56180174949 ],
